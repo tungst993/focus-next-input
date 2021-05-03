@@ -13,6 +13,10 @@ const useSSNFields = (numberOfField: number) => {
       const { maxLength, value, name } = e.target;
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const [fieldName, fieldIndex] = name.split("-");
+      console.log(value.length);
+      console.log('maxLength', maxLength);
+      console.log('fieldIndex', fieldIndex);
+      
 
       // Check if they hit the max character length
       if (value.length >= maxLength) {
@@ -22,7 +26,8 @@ const useSSNFields = (numberOfField: number) => {
           const nextSibling = document.querySelector(
             `input[name=ssn-${parseInt(fieldIndex, 10) + 1}]`
           );
-
+          console.log('nextSibling',  `input[name=ssn-${parseInt(fieldIndex, 10) + 1}]`);
+          
           // If found, focus the next field
           if (nextSibling !== null) {
             //@ts-ignore
@@ -48,21 +53,17 @@ const SSNField = React.memo<SSNFieldProps>(({numberOfField}) => {
 
   return (
     <div>
-      <input
-        type="text"
-        name="ssn-1"
-        maxLength={3}
-        onChange={handleChange} />
-      <input
-        type="text"
-        name="ssn-2"
-        maxLength={2}
-        onChange={handleChange} />
-      <input
-        type="text"
-        name="ssn-3"
-        maxLength={4}
-        onChange={handleChange} />
+      {new Array(numberOfField).fill(undefined).map((item, index) => (
+        <React.Fragment key={index}>
+          {console.log('index', `sns-${index+1}`)}
+        <input
+          type="text"
+          name={`ssn-${index+1}`}
+          maxLength={1}
+          onChange={handleChange} />
+        </React.Fragment>
+      ))}
+ 
     </div>
   );
 });
